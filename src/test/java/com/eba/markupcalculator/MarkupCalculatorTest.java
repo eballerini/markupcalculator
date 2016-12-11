@@ -22,4 +22,16 @@ public class MarkupCalculatorTest {
         assertEquals(new BigDecimal("6199.81"), markupCalculator.calculate(new BigDecimal("5432"), 1, "drugs"));
         assertEquals(new BigDecimal("13707.63"), markupCalculator.calculate(new BigDecimal("12456.95"), 4, "books"));
     }
+
+    @Test
+    public void testNoMarkup() throws Exception {
+        MarkupCalculator markupCalculator = new MarkupCalculator(0f, 0f, null, 0f);
+        assertEquals(new BigDecimal("1299.99"), markupCalculator.calculate(new BigDecimal("1299.99"), 3, "food"));
+    }
+
+    @Test(expected = MarkupCalculatorException.class)
+    public void testInvalidBasePrice() throws Exception {
+        MarkupCalculator markupCalculator = new MarkupCalculator(0f, 0f, null, 0f);
+        markupCalculator.calculate(null, -1, "books");
+    }
 }
